@@ -5,6 +5,5 @@
     "name": "Woojo Kim",
     "email": "kwoojo0127@gmail.com"
   },
-  "license": "MIT",
-  "hooks": "./hooks/hooks.json"
+  "license": "MIT"
 }
