@@ -11,5 +11,5 @@ Personal Claude Code plugin that injects development rules into every session.
 
 ```bash
 /plugin marketplace add woozo0127/woozo-personal
-/plugin install woozo-personal@woozo-personal
+/plugin install dev-base@woozo-personal
 ```

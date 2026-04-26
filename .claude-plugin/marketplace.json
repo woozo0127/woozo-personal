@@ -7,8 +7,8 @@
   },
   "plugins": [
     {
-      "name": "woozo-personal",
-      "source": "./",
+      "name": "dev-base",
+      "source": "./plugins/dev-base",
       "category": "productivity"
     }
   ]
