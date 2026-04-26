@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "woozo-personal",
+  "owner": {
+    "name": "Woojo Kim",
+    "url": "https://github.com/woozo0127"
+  },
+  "plugins": [
+    {
+      "name": "woozo-personal",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

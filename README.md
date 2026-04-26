@@ -10,5 +10,6 @@ Personal Claude Code plugin that injects development rules into every session.
 ## Install
 
 ```bash
-/plugin install /Users/woojo/workspace/woozo-personal
+/plugin marketplace add woozo0127/woozo-personal
+/plugin install woozo-personal@woozo-personal
 ```
