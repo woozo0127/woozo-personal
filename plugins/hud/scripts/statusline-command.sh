@@ -107,7 +107,7 @@ fi
 line1=$model
 [ -n "$effort" ] && line1="${line1} ${effort}"
 [ -n "$base" ] && line1="${line1} | ${base}"
-[ -n "$branch" ] && line1="${line1} | ${branch}${wt_label}"
+[ -n "$branch" ] && line1="${line1} | git: ${branch}${wt_label}"
 
 # --- Line 2 ---
 
