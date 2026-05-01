@@ -1,11 +1,13 @@
 ---
-name: hud-setup
-description: Use this skill when the user wants to install, customize, or troubleshoot the Claude Code statusline HUD provided by this plugin — including changing colors, thresholds, the context gauge style, the 5h/7d rate-limit display, branch/worktree indicators, or the remaining-time formatting. Trigger this skill whenever the user mentions "statusline", "HUD", "status bar", "ctx gauge", "rate limit display", or asks to tweak the appearance of the bottom Claude Code status row, even if they don't name this plugin explicitly.
+name: config
+description: Use this skill when the user wants to customize, tweak, debug, or troubleshoot the HUD — including changing colors, thresholds, gauge style or width, adding/removing line-2 fields (5h/7d rate limits), formatting remaining time differently, or diagnosing display issues like a blank statusline, corrupted text after percent signs, or stderr noise on every render. Trigger on phrases like "hud 색 바꿔", "ctx 게이지 너비", "rate limit 칸 빼줘", "상태바 깨짐", "statusline 디버그", "threshold 조정", "gauge style", or any explicit request to modify the HUD's appearance/behavior. Does NOT install or uninstall the HUD — see the `install` and `uninstall` skills for that.
 ---
 
-# HUD Setup
+# HUD config
 
-This skill maintains the Claude Code statusline HUD shipped with this plugin. The HUD renders two colored lines at the bottom of Claude Code:
+Customize and troubleshoot the HUD's `scripts/statusline-command.sh`. The script is executed by `sh` (POSIX), not bash. Keep edits POSIX-compatible.
+
+The HUD renders two colored lines:
 
 ```
 <model> <effort> | <baseName> | <branch>[*] [wt]
@@ -14,45 +16,14 @@ ctx: <gauge> <pct>% | 5h: <pct>%(<remaining>) | 7d: <pct>%(<remaining>)
 
 ## When to use
 
-- User asks to install / activate / enable the HUD
 - User wants to change colors, thresholds, gauge width, or formatting
-- User reports the HUD is broken, blank, or showing weird characters
-- User wants to add/remove a field from line 1 or line 2
-
-## Files in this plugin
-
-- `scripts/statusline-command.sh` — the script Claude Code invokes per status update. Reads JSON on stdin, prints 1–2 ANSI-colored lines to stdout.
-- `.claude-plugin/plugin.json` — plugin metadata.
-
-The script is executed by `sh` (POSIX), not bash. Keep edits POSIX-compatible.
-
-## Activation
-
-Claude Code does not auto-register a statusline from a plugin. When the user wants to enable / install / activate the HUD, edit `~/.claude/settings.json` for them — don't ask them to do it manually.
-
-**Procedure:**
-
-1. Read `~/.claude/settings.json` (it's a JSON object; create it as `{}` if missing).
-2. Inspect any existing `statusLine` value:
-   - If absent → safe to write directly.
-   - If present and already pointing at this plugin's script → done, nothing to change.
-   - If present pointing somewhere else → confirm with the user before overwriting. They may have a custom statusline they want to keep.
-3. Write this entry (preserve all other fields in the file):
-   ```json
-   "statusLine": {
-     "type": "command",
-     "command": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh\""
-   }
-   ```
-4. Verify by piping a synthetic JSON payload through the plugin's script (see Debugging section). Don't rely on Claude Code re-reading settings.json automatically — tell the user to restart Claude Code if the bar doesn't refresh.
-
-**`${CLAUDE_PLUGIN_ROOT}` fallback:** This variable is supported in plugin-defined commands (hooks, MCP, statusline). If a particular Claude Code version doesn't expand it, fall back to the resolved absolute path: `~/.claude/plugins/cache/woozo-personal/hud/scripts/statusline-command.sh`. Check the path exists before writing.
-
-**Deactivation:** Remove the `statusLine` key from `~/.claude/settings.json`, or replace it with whatever the user had before. If you overwrote a previous value in step 2, restore it.
+- User wants to add or remove a field on line 1 or line 2
+- User reports the HUD is blank, broken, or showing weird characters
+- User wants to format remaining time differently
 
 ## Layout invariants
 
-These are the rules every customization must preserve unless the user explicitly overrides them:
+These rules every customization must preserve unless the user explicitly overrides them:
 
 - **Line 1**: `<model> <effort> | <baseName> | <branch>[*] [wt]`
   - `<effort>` is appended only when present in the JSON payload
@@ -130,3 +101,7 @@ Common failure modes:
 - Don't break the single-pass `jq` invocation — it's there for performance (10 jq calls → 1 cuts ~100–500ms per render)
 - Keep input guards (`is_numeric`, `is_integer`) in front of every arithmetic / `printf "%.0f"` operation
 - Don't add new external command dependencies beyond `jq`, `git`, `date`, `basename` — the script must work on a fresh macOS / Linux shell
+
+## After editing
+
+The script is read fresh on every status update — no restart needed. If the user reports the change isn't reflected, check whether `~/.claude/settings.json`'s `statusLine.command` actually points at this plugin's script (not a stale absolute path or a different file). Hand off to the `install` skill if re-registration is needed.
