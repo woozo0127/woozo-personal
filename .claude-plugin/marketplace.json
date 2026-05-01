@@ -7,8 +7,8 @@
   },
   "plugins": [
     {
-      "name": "dev-base",
-      "source": "./plugins/dev-base",
+      "name": "rules",
+      "source": "./plugins/rules",
       "category": "productivity"
     },
     {

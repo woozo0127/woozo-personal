@@ -4,15 +4,16 @@ Personal Claude Code marketplace.
 
 ## Plugins
 
-### `dev-base`
+### `rules`
 
-Coding rules you can opt into globally.
+Behavioral rules you can opt into globally.
 
 - **`rules/development.md`** — behavioral guide for coding tasks: clarify before coding, read context first, small scoped changes, YAGNI, debug to root cause, verify before claiming done, boundaries and interfaces, naming, blast-radius awareness, surface trade-offs, plus a methodology catalog (TDD, Refactoring, SOLID, DDD, YAGNI, KISS, DRY).
-- **`skills/install/SKILL.md`** — installs the rules globally by symlinking them into `~/.claude/rules/dev-base/development.md`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session.
-- **`skills/uninstall/SKILL.md`** — removes the symlink and prunes the empty directory.
+- **`rules/communication.md`** — communication guide for user-facing output: file paths are always written as absolute paths, never relative or `~`-shortened.
+- **`skills/install/SKILL.md`** — installs the rules globally by symlinking each file into `~/.claude/rules/woozo/` (e.g. `~/.claude/rules/woozo/development.md`, `~/.claude/rules/woozo/communication.md`). Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
+- **`skills/uninstall/SKILL.md`** — removes the symlinks and prunes the empty `woozo/` directory.
 
-After installing the plugin, ask Claude something like *"dev-base 설치"* / *"install dev-base"*. Plugin install alone does nothing — activation is explicit.
+After installing the plugin, ask Claude something like *"rules 설치"* / *"install rules"*. Plugin install alone does nothing — activation is explicit.
 
 ### `hud`
 
@@ -47,7 +48,7 @@ If `${CLAUDE_PLUGIN_ROOT}` doesn't expand in your Claude Code version, use the a
 
 ```bash
 /plugin marketplace add woozo0127/woozo-personal
-/plugin install dev-base@woozo-personal
+/plugin install rules@woozo-personal
 /plugin install hud@woozo-personal
 ```
 
