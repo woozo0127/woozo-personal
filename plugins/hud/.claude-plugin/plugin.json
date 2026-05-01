@@ -1,0 +1,10 @@
+{
+  "name": "hud",
+  "version": "0.1.0",
+  "description": "Claude Code 2-line statusline HUD: model/effort, branch+dirty, worktree, ctx gauge with thresholds, and 5h/7d rate-limit usage with reset countdowns.",
+  "author": {
+    "name": "Woojo Kim",
+    "email": "kwoojo0127@gmail.com"
+  },
+  "license": "MIT"
+}

@@ -10,6 +10,11 @@
       "name": "dev-base",
       "source": "./plugins/dev-base",
       "category": "productivity"
+    },
+    {
+      "name": "hud",
+      "source": "./plugins/hud",
+      "category": "productivity"
     }
   ]
 }
