@@ -8,7 +8,7 @@ Personal Claude Code marketplace.
 
 Behavioral rules you can opt into globally.
 
-- **`rules/development.md`** — behavioral guide for coding tasks: clarify before coding, read context first, small scoped changes, YAGNI, debug to root cause, verify before claiming done, boundaries and interfaces, naming, blast-radius awareness, surface trade-offs, plus a methodology catalog (TDD, Refactoring, SOLID, DDD, YAGNI, KISS, DRY).
+- **`rules/development.md`** — behavioral guide for coding tasks. A trigger-based methodology table (Refactoring, DDD) sits up top, followed by 7 behavioral rules: clarify before coding, read context first, small scoped changes, debug to root cause, verify before claiming done, boundaries and interfaces (with SOLID/LSP coverage), surface trade-offs.
 - **`rules/communication.md`** — communication guide for user-facing output: file paths are always written as absolute paths, never relative or `~`-shortened.
 - **`skills/install/SKILL.md`** — installs the rules globally by symlinking each file into `~/.claude/rules/woozo/` (e.g. `~/.claude/rules/woozo/development.md`, `~/.claude/rules/woozo/communication.md`). Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
 - **`skills/uninstall/SKILL.md`** — removes the symlinks and prunes the empty `woozo/` directory.
