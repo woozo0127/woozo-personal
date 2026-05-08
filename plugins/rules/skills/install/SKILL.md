@@ -1,6 +1,6 @@
 ---
 name: install
-description: Use this skill when the user wants to install, activate, or apply the `rules` plugin globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates symlinks at `~/.claude/rules/woozo/development.md` and `~/.claude/rules/woozo/communication.md` pointing at this plugin's source files, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks them up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
+description: Use this skill when the user wants to install, activate, or apply the `rules` plugin globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates a symlink at `~/.claude/rules/woozo/development.md` pointing at this plugin's source file, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks it up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
 ---
 
 # rules install
@@ -20,36 +20,31 @@ This skill manages exactly these targets under `~/.claude/rules/woozo/`. The `wo
 | Source (truth) | Target (symlink) |
 |---|---|
 | `${CLAUDE_PLUGIN_ROOT}/rules/development.md` | `~/.claude/rules/woozo/development.md` |
-| `${CLAUDE_PLUGIN_ROOT}/rules/communication.md` | `~/.claude/rules/woozo/communication.md` |
 
 Source files are the truth — never edit through the symlink; edit the source.
 
 ## Procedure
 
-Run the procedure below **once per owned file**. The flow is identical; only the file name differs.
-
 1. **Resolve the source absolute path:**
-   - First try `${CLAUDE_PLUGIN_ROOT}/rules/<file>.md`. If `${CLAUDE_PLUGIN_ROOT}` expands and the file exists, use that.
-   - Fallback: glob `~/.claude/plugins/cache/woozo-personal/rules/*/rules/<file>.md` and pick the lexicographically largest path (latest version directory).
+   - First try `${CLAUDE_PLUGIN_ROOT}/rules/development.md`. If `${CLAUDE_PLUGIN_ROOT}` expands and the file exists, use that.
+   - Fallback: glob `~/.claude/plugins/cache/woozo-personal/rules/*/rules/development.md` and pick the lexicographically largest path (latest version directory).
    - If neither resolves, abort and ask the user to run `/plugin update` for the `rules@woozo-personal` plugin.
    - Resolve to a true absolute path (`realpath` or `python3 -c "import os,sys;print(os.path.realpath(sys.argv[1]))"`) before using as the symlink target — relative paths break when the symlink is read from a different cwd.
 
 2. **Ensure the target directory exists:** `mkdir -p ~/.claude/rules/woozo`.
 
-3. **Inspect `~/.claude/rules/woozo/<file>.md`:**
-   - **Does not exist** → `ln -s <abs-source> ~/.claude/rules/woozo/<file>.md`. Done.
+3. **Inspect `~/.claude/rules/woozo/development.md`:**
+   - **Does not exist** → `ln -s <abs-source> ~/.claude/rules/woozo/development.md`. Done.
    - **Symlink pointing to the resolved source** → already installed. Tell the user, skip (no-op).
    - **Symlink pointing elsewhere** → show the user the current target via `readlink`, confirm replacement. On yes: `rm` the symlink, then `ln -s` the new one.
-   - **Regular file** → likely a user-edited copy from a previous fork. Show its `ls -la` and first few lines, confirm replacement. On yes: rename to `<file>.md.bak` (don't delete), then `ln -s` the new one.
+   - **Regular file** → likely a user-edited copy from a previous fork. Show its `ls -la` and first few lines, confirm replacement. On yes: rename to `development.md.bak` (don't delete), then `ln -s` the new one.
 
-4. **Verify each symlink:**
+4. **Verify the symlink:**
    ```sh
    readlink ~/.claude/rules/woozo/development.md
-   readlink ~/.claude/rules/woozo/communication.md
    test -f ~/.claude/rules/woozo/development.md && head -3 ~/.claude/rules/woozo/development.md
-   test -f ~/.claude/rules/woozo/communication.md && head -3 ~/.claude/rules/woozo/communication.md
    ```
-   Each `readlink` should match the resolved source path. Heads should start with `# Development Rules` and `# Communication Rules` respectively.
+   `readlink` should match the resolved source path. The head should start with `# Development Rules`.
 
 5. **Inform the user:** installed; takes effect on the next session start (existing sessions don't re-read global rules).
 
