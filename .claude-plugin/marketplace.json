@@ -7,13 +7,8 @@
   },
   "plugins": [
     {
-      "name": "rules",
-      "source": "./plugins/rules",
-      "category": "productivity"
-    },
-    {
-      "name": "hud",
-      "source": "./plugins/hud",
+      "name": "woozo",
+      "source": "./",
       "category": "productivity"
     }
   ]

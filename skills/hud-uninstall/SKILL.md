@@ -1,5 +1,5 @@
 ---
-name: uninstall
+name: hud-uninstall
 description: Use this skill when the user wants to uninstall, deactivate, disable, or remove the HUD statusline — including phrases like "uninstall hud", "deactivate hud", "hud 제거", "hud 비활성화", "statusline 끄기", "상태바 끄기". The skill removes the `statusLine` entry from `~/.claude/settings.json` if it points at this plugin's script. Does not touch any other field. Restart Claude Code after uninstall to clear the bar.
 ---
 
@@ -19,7 +19,7 @@ Deactivate the HUD by removing the `statusLine` entry from `~/.claude/settings.j
 
 2. **Inspect `statusLine`:**
    - **Absent** → already uninstalled. Tell the user, exit (no-op).
-   - **Present and pointing at this plugin's script** (the `command` references `${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh` or resolves into `~/.claude/plugins/cache/woozo-personal/hud/`) → remove the key without prompting.
+   - **Present and pointing at this plugin's script** (the `command` references `${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh` or resolves into `~/.claude/plugins/cache/woozo-personal/woozo/`) → remove the key without prompting.
    - **Present and pointing at something else** → not this plugin's HUD. Show the user the current value and confirm before removing. Strongly recommend keeping it if they don't recognize it as their own.
 
 3. **Write `~/.claude/settings.json`** back with the `statusLine` key removed and every other field byte-stable. Use a JSON-aware edit, not regex/sed.

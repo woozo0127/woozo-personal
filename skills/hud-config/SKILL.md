@@ -1,6 +1,6 @@
 ---
-name: config
-description: Use this skill when the user wants to customize, tweak, debug, or troubleshoot the HUD — including changing colors, thresholds, gauge style or width, adding/removing line-2 fields (5h/7d rate limits), formatting remaining time differently, or diagnosing display issues like a blank statusline, corrupted text after percent signs, or stderr noise on every render. Trigger on phrases like "hud 색 바꿔", "ctx 게이지 너비", "rate limit 칸 빼줘", "상태바 깨짐", "statusline 디버그", "threshold 조정", "gauge style", or any explicit request to modify the HUD's appearance/behavior. Does NOT install or uninstall the HUD — see the `install` and `uninstall` skills for that.
+name: hud-config
+description: Use this skill when the user wants to customize, tweak, debug, or troubleshoot the HUD — including changing colors, thresholds, gauge style or width, adding/removing line-2 fields (5h/7d rate limits), formatting remaining time differently, or diagnosing display issues like a blank statusline, corrupted text after percent signs, or stderr noise on every render. Trigger on phrases like "hud 색 바꿔", "ctx 게이지 너비", "rate limit 칸 빼줘", "상태바 깨짐", "statusline 디버그", "threshold 조정", "gauge style", or any explicit request to modify the HUD's appearance/behavior. Does NOT install or uninstall the HUD — see the `hud-install` and `hud-uninstall` skills for that.
 ---
 
 # HUD config
@@ -104,4 +104,4 @@ Common failure modes:
 
 ## After editing
 
-The script is read fresh on every status update — no restart needed. If the user reports the change isn't reflected, check whether `~/.claude/settings.json`'s `statusLine.command` actually points at this plugin's script (not a stale absolute path or a different file). Hand off to the `install` skill if re-registration is needed.
+The script is read fresh on every status update — no restart needed. If the user reports the change isn't reflected, check whether `~/.claude/settings.json`'s `statusLine.command` actually points at this plugin's script (not a stale absolute path or a different file). Hand off to the `hud-install` skill if re-registration is needed.

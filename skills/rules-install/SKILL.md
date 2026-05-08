@@ -1,11 +1,11 @@
 ---
-name: install
-description: Use this skill when the user wants to install, activate, or apply the `rules` plugin globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates a symlink at `~/.claude/rules/woozo/development.md` pointing at this plugin's source file, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks it up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
+name: rules-install
+description: Use this skill when the user wants to install, activate, or apply the rules feature globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates a symlink at `~/.claude/rules/woozo/development.md` pointing at this plugin's source file, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks it up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
 ---
 
 # rules install
 
-Install the `rules` plugin into the user's global rules directory by creating symlinks to the plugin's source files. The user's environment auto-loads `~/.claude/rules/*.md` as global instructions, so symlinks are enough — no SessionStart hook needed.
+Install the rules feature into the user's global rules directory by creating symlinks to the plugin's source files. The user's environment auto-loads `~/.claude/rules/*.md` as global instructions, so symlinks are enough — no SessionStart hook needed.
 
 ## When to use
 
@@ -27,14 +27,14 @@ Source files are the truth — never edit through the symlink; edit the source.
 
 0. **Clean up legacy `communication.md`:** earlier versions of this plugin shipped a separate `communication.md` rule and installed it at `~/.claude/rules/woozo/communication.md`. It is no longer owned. Inspect that path:
    - **Does not exist** → skip.
-   - **Symlink pointing into this plugin's cache** (target starts with `~/.claude/plugins/cache/woozo-personal/rules/`) → `rm` it without prompting.
+   - **Symlink pointing into this plugin's cache** (target starts with `~/.claude/plugins/cache/woozo-personal/woozo/`) → `rm` it without prompting.
    - **Symlink pointing elsewhere** → show the user the current target via `readlink`, confirm before `rm`.
    - **Regular file** → user-edited copy. Show its `ls -la` and first few lines, confirm strongly. Offer to rename to `communication.md.bak` instead of deleting; only `rm` outright if the user explicitly declines the backup.
 
 1. **Resolve the source absolute path:**
    - First try `${CLAUDE_PLUGIN_ROOT}/rules/development.md`. If `${CLAUDE_PLUGIN_ROOT}` expands and the file exists, use that.
-   - Fallback: glob `~/.claude/plugins/cache/woozo-personal/rules/*/rules/development.md` and pick the lexicographically largest path (latest version directory).
-   - If neither resolves, abort and ask the user to run `/plugin update` for the `rules@woozo-personal` plugin.
+   - Fallback: glob `~/.claude/plugins/cache/woozo-personal/woozo/*/rules/development.md` and pick the lexicographically largest path (latest version directory).
+   - If neither resolves, abort and ask the user to run `/plugin update` for the `woozo@woozo-personal` plugin.
    - Resolve to a true absolute path (`realpath` or `python3 -c "import os,sys;print(os.path.realpath(sys.argv[1]))"`) before using as the symlink target — relative paths break when the symlink is read from a different cwd.
 
 2. **Ensure the target directory exists:** `mkdir -p ~/.claude/rules/woozo`.
