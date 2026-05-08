@@ -8,7 +8,7 @@ Personal Claude Code marketplace.
 
 Behavioral rules you can opt into globally.
 
-- **`rules/development.md`** — behavioral guide for coding tasks. A trigger-based methodology table (Refactoring, DDD) sits up top, followed by 7 behavioral rules: clarify before coding, read context first, small scoped changes, debug to root cause, verify before claiming done, boundaries and interfaces (with SOLID/LSP coverage), surface trade-offs.
+- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Four sections: think before coding, simplicity first, surgical changes, goal-driven execution.
 - **`skills/install/SKILL.md`** — installs the rule globally by symlinking `rules/development.md` into `~/.claude/rules/woozo/development.md`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
 - **`skills/uninstall/SKILL.md`** — removes the symlink (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
 
