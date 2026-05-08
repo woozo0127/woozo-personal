@@ -25,6 +25,12 @@ Source files are the truth — never edit through the symlink; edit the source.
 
 ## Procedure
 
+0. **Clean up legacy `communication.md`:** earlier versions of this plugin shipped a separate `communication.md` rule and installed it at `~/.claude/rules/woozo/communication.md`. It is no longer owned. Inspect that path:
+   - **Does not exist** → skip.
+   - **Symlink pointing into this plugin's cache** (target starts with `~/.claude/plugins/cache/woozo-personal/rules/`) → `rm` it without prompting.
+   - **Symlink pointing elsewhere** → show the user the current target via `readlink`, confirm before `rm`.
+   - **Regular file** → user-edited copy. Show its `ls -la` and first few lines, confirm strongly. Offer to rename to `communication.md.bak` instead of deleting; only `rm` outright if the user explicitly declines the backup.
+
 1. **Resolve the source absolute path:**
    - First try `${CLAUDE_PLUGIN_ROOT}/rules/development.md`. If `${CLAUDE_PLUGIN_ROOT}` expands and the file exists, use that.
    - Fallback: glob `~/.claude/plugins/cache/woozo-personal/rules/*/rules/development.md` and pick the lexicographically largest path (latest version directory).
