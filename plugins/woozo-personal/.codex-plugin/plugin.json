@@ -1,0 +1,42 @@
+{
+  "name": "woozo-personal",
+  "version": "1.1.0",
+  "description": "Woojo Kim's personal Codex utilities for installing behavioral coding rules.",
+  "author": {
+    "name": "Woojo Kim",
+    "email": "kwoojo0127@gmail.com",
+    "url": "https://github.com/woozo0127"
+  },
+  "homepage": "https://github.com/woozo0127/woozo-personal",
+  "repository": "https://github.com/woozo0127/woozo-personal",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "rules",
+    "skills",
+    "coding-rules"
+  ],
+  "skills": "./codex-skills/",
+  "interface": {
+    "displayName": "Woozo Personal",
+    "shortDescription": "Personal coding rules for Codex",
+    "longDescription": "A small Codex utility bundle for installing and removing Woozo's behavioral coding rules in global Codex instructions.",
+    "developerName": "Woojo Kim",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/woozo0127/woozo-personal",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "defaultPrompt": [
+      "rules 설치",
+      "Codex에 개발 규칙 적용해줘",
+      "rules 제거"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

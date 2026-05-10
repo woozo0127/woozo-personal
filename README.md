@@ -1,6 +1,6 @@
 # woozo-personal
 
-Personal Claude Code plugin. The repository ships as a single plugin (`woozo`) hosted in the `woozo-personal` marketplace, bundling two features — `rules` and `hud` — exposed as five skills.
+Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woozo` in the `woozo-personal` marketplace with `rules` and `hud` features. The Codex marketplace exposes only the `rules` feature through `plugins/woozo-personal/`.
 
 ## Features
 
@@ -43,7 +43,7 @@ Manual setup, if you prefer:
 
 If `${CLAUDE_PLUGIN_ROOT}` doesn't expand in your Claude Code version, use the absolute path under `~/.claude/plugins/cache/woozo-personal/woozo/<version>/scripts/statusline-command.sh`.
 
-## Install
+## Claude Code Install
 
 ```bash
 /plugin marketplace add woozo0127/woozo-personal
@@ -54,6 +54,17 @@ After plugin install, activate each feature explicitly via its skill:
 
 - `rules` → ask Claude *"rules 설치"* (triggers `rules-install`)
 - `hud` → ask Claude *"HUD 설치"* (triggers `hud-install`)
+
+## Codex Marketplace
+
+Codex support uses this repository as a marketplace. The marketplace catalog lives at `.agents/plugins/marketplace.json` and points to the Codex plugin under `plugins/woozo-personal/`.
+
+Feature support:
+
+- `rules` installs into `~/.codex/AGENTS.md` as a managed Woozo block.
+- `hud` is not exposed to Codex. The HUD remains a Claude Code-only feature under the existing Claude plugin.
+
+The Codex plugin is intentionally self-contained under `plugins/woozo-personal/` so the marketplace entry can resolve it with `./plugins/woozo-personal`.
 
 ## Migration from 0.x (separate `rules` / `hud` plugins)
 
