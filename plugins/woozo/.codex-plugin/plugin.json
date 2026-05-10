@@ -18,8 +18,8 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Woozo Personal",
-    "shortDescription": "Personal coding rules for Codex",
+    "displayName": "Woozo",
+    "shortDescription": "Woozo's personal coding rules for Codex",
     "longDescription": "A small Codex utility bundle for installing and removing Woozo's behavioral coding rules in global Codex instructions.",
     "developerName": "Woojo Kim",
     "category": "Coding",
