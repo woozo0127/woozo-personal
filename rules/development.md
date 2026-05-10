@@ -66,6 +66,73 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
----
+## 5. Surface Conflicts, Don't Average Them
 
-**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+**Pick one. Explain why. Flag the other for cleanup.**
+
+When two patterns contradict:
+
+- Pick the more recent or more tested. Don't blend.
+- State why you picked it - don't choose silently.
+- Flag the loser for cleanup. Don't "fix" it as a side effect.
+- If you can't tell which is canonical, ask.
+
+Two contradictory patterns merged into one usually breaks both.
+
+## 6. Read Before You Write
+
+**Understand surrounding code before adding to it.**
+
+Before writing new code:
+
+- Read the file's exports and immediate callers.
+- Check shared utilities - don't reinvent what already exists.
+- If you can't explain why code is structured a certain way, ask.
+
+"Looks orthogonal" is the famous last words of an unintended regression.
+
+## 7. Tests Verify Intent, Not Just Behavior
+
+**A test should fail when intent breaks, not just when implementation changes.**
+
+- Encode the WHY, not just the WHAT.
+- A test that can't fail when business logic changes is worthless.
+- If a test mirrors implementation line-by-line, it's a copy, not a test.
+
+Ask yourself: "If the requirement changed, would this test fail?" If no, rewrite it.
+
+## 8. Checkpoint After Every Significant Step
+
+**Know where you are before taking the next step.**
+
+After each meaningful change:
+
+- Summarize what was done, what's verified, what's left.
+- Don't continue from a state you can't describe back.
+- If you lose track, stop and restate.
+
+The test: You can answer "what's done and what's next?" without scrolling.
+
+## 9. Match the Codebase, Even If You Disagree
+
+**Conformance over taste. Surface disagreements, don't fork silently.**
+
+When working in an existing codebase:
+
+- Match existing style, naming, and patterns.
+- Don't introduce a "better" convention as a side effect.
+- If a convention seems genuinely harmful, raise it - don't quietly do it your way.
+
+The test: A reader can't tell which lines you wrote vs. the original author.
+
+## 10. Fail Loud
+
+**Surface skips, errors, and uncertainty - don't bury them.**
+
+When reporting status:
+
+- "Completed" is wrong if anything was skipped silently.
+- "Tests pass" is wrong if any were skipped or stubbed.
+- "Works" is wrong if you didn't actually run it.
+
+Default to surfacing uncertainty. Loud failures are cheaper than silent ones.
