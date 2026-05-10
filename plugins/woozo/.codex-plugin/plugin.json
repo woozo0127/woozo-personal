@@ -1,5 +1,5 @@
 {
-  "name": "woozo-personal",
+  "name": "woozo",
   "version": "1.1.0",
   "description": "Woojo Kim's personal Codex utilities for installing behavioral coding rules.",
   "author": {
@@ -16,7 +16,7 @@
     "skills",
     "coding-rules"
   ],
-  "skills": "./codex-skills/",
+  "skills": "./skills/",
   "interface": {
     "displayName": "Woozo Personal",
     "shortDescription": "Personal coding rules for Codex",

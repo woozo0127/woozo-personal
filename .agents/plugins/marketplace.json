@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "woozo-personal",
+      "name": "woozo",
       "source": {
         "source": "local",
-        "path": "./plugins/woozo-personal"
+        "path": "./plugins/woozo"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -1,6 +1,6 @@
 # woozo-personal
 
-Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woozo` in the `woozo-personal` marketplace with `rules` and `hud` features. The Codex marketplace exposes only the `rules` feature through `plugins/woozo-personal/`.
+Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woozo` in the `woozo-personal` marketplace with `rules` and `hud` features. The Codex marketplace exposes only the `rules` feature through `plugins/woozo/`.
 
 ## Features
 
@@ -57,14 +57,14 @@ After plugin install, activate each feature explicitly via its skill:
 
 ## Codex Marketplace
 
-Codex support uses this repository as a marketplace. The marketplace catalog lives at `.agents/plugins/marketplace.json` and points to the Codex plugin under `plugins/woozo-personal/`.
+Codex support uses this repository as a marketplace. The marketplace catalog lives at `.agents/plugins/marketplace.json` and points to the Codex plugin under `plugins/woozo/`.
 
 Feature support:
 
 - `rules` installs into `~/.codex/AGENTS.md` as a managed Woozo block.
 - `hud` is not exposed to Codex. The HUD remains a Claude Code-only feature under the existing Claude plugin.
 
-The Codex plugin is intentionally self-contained under `plugins/woozo-personal/` so the marketplace entry can resolve it with `./plugins/woozo-personal`.
+The Codex plugin is intentionally self-contained under `plugins/woozo/` so the marketplace entry can resolve it with `./plugins/woozo`.
 
 ## Migration from 0.x (separate `rules` / `hud` plugins)
 
