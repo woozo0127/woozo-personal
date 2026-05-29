@@ -55,10 +55,10 @@ The `threshold_color()` helper holds the `30` / `70` cutoffs. Adjust both number
 
 ### Change gauge style or width
 
-`make_gauge()` accepts a single percentage and produces a 10-wide bar. To swap characters, change the two literals (default `▰` filled, `▱` empty). Alternative styles:
+`make_gauge()` accepts a single percentage and produces a 10-wide bar. To swap characters, change the two literals (default `█` filled, `░` empty). Alternative styles:
 
-- Heavy block: `█` / `░`
-- Square: `▰` / `▱` (current)
+- Heavy block: `█` / `░` (current)
+- Square: `▰` / `▱`
 - Bracketed: prepend `[` and append `]` in the call site, not in `make_gauge`
 
 To change width, edit `width=10` inside the function. Keep width ≤ 12 — wider bars push the rest of line 2 off-screen on narrow terminals.

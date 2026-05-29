@@ -58,8 +58,8 @@ make_gauge() {
   [ "$fill" -gt "$width" ] && fill=$width
   empty=$(( width - fill ))
   bar=""
-  i=0; while [ $i -lt $fill ]; do bar="${bar}▰"; i=$((i+1)); done
-  i=0; while [ $i -lt $empty ]; do bar="${bar}▱"; i=$((i+1)); done
+  i=0; while [ $i -lt $fill ]; do bar="${bar}█"; i=$((i+1)); done
+  i=0; while [ $i -lt $empty ]; do bar="${bar}░"; i=$((i+1)); done
   printf '%s' "$bar"
 }
 

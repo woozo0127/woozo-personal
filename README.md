@@ -20,7 +20,7 @@ After installing the plugin, ask Claude something like *"rules 설치"* / *"inst
 
 ```
 claude-opus-4-7 medium | pumpu-log | feat/home wt
-ctx: ▰▰▰▰▱▱▱▱▱▱ 42% | 5h: 31%(2h15m) | 7d: 8%(1d3h)
+ctx: ████░░░░░░ 42% | 5h: 31%(2h15m) | 7d: 8%(1d3h)
 ```
 
 - **`scripts/statusline-command.sh`** — POSIX shell script that Claude Code invokes per status update. Single `jq` pass, threshold-based coloring (`<30%` green / `<70%` yellow / `>=70%` red), 10-wide gauge for context, day-priority remaining time for 7d.
