@@ -136,3 +136,14 @@ When reporting status:
 - "Works" is wrong if you didn't actually run it.
 
 Default to surfacing uncertainty. Loud failures are cheaper than silent ones.
+
+## 11. TDD: Contract First
+
+**Settle the contract before the test; the test before the code.**
+
+- Define the public contract first - signatures, input/output types, error behavior, invariants - before writing any test.
+- Write the test against that contract, not against an implementation you've already pictured.
+- Drive the red-green-refactor loop from the contract; let it be the spec the tests encode.
+- If the contract is still fuzzy, settle it before testing - don't let tests freeze an accidental shape.
+
+Ask yourself: "Could someone else implement this from the contract alone?" If not, it isn't settled yet.
