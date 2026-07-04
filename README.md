@@ -44,6 +44,13 @@ Manual setup, if you prefer:
 
 If `${CLAUDE_PLUGIN_ROOT}` doesn't expand in your Claude Code version, use the absolute path under `~/.claude/plugins/cache/woozo-personal/woozo/<version>/scripts/statusline-command.sh`.
 
+### `update`
+
+Applies a plugin update to installed features. After `/plugin update` (or `claude plugin update woozo@woozo-personal`), ask Claude something like *"업데이트 적용"* / *"apply the plugin update"*.
+
+- **`skills/update/SKILL.md`** — re-points the `~/.claude/rules/woozo/` symlinks and the `statusLine` path in `~/.claude/settings.json` at the latest cached version. Only refreshes features that are already installed; never installs, uninstalls, or prunes caches.
+- **`plugins/woozo/skills/update/SKILL.md`** — Codex counterpart: re-syncs the managed Woozo blocks in `~/.codex/AGENTS.md` with the latest rule files, appending blocks for newly shipped rules.
+
 ## Claude Code Install
 
 ```bash
