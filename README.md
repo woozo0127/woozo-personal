@@ -8,9 +8,10 @@ Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woo
 
 Behavioral rules you can opt into globally.
 
-- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Four sections: think before coding, simplicity first, surgical changes, goal-driven execution.
-- **`skills/rules-install/SKILL.md`** — installs the rule globally by symlinking `rules/development.md` into `~/.claude/rules/woozo/development.md`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
-- **`skills/rules-uninstall/SKILL.md`** — removes the symlink (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
+- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Eleven sections: think before coding, simplicity first, surgical changes, goal-driven execution, surface conflicts, read before write, tests verify intent, checkpoint after every step, match the codebase, fail loud, TDD contract first.
+- **`rules/thinking.md`** — critical/objective thinking rules for every answer and judgment, not just coding: no reflexive agreement, judge claims on evidence, separate facts/inference/opinion, say "I don't know", skip empty praise.
+- **`skills/rules-install/SKILL.md`** — installs the rules globally by symlinking each file under `rules/` into `~/.claude/rules/woozo/`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
+- **`skills/rules-uninstall/SKILL.md`** — removes the symlinks (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
 
 After installing the plugin, ask Claude something like *"rules 설치"* / *"install rules"*. Plugin install alone does nothing — activation is explicit.
 
@@ -61,7 +62,7 @@ Codex support uses this repository as a marketplace. The marketplace catalog liv
 
 Feature support:
 
-- `rules` installs into `~/.codex/AGENTS.md` as a managed Woozo block.
+- `rules` installs into `~/.codex/AGENTS.md` as managed Woozo blocks (one per rule file).
 - `hud` is not exposed to Codex. The HUD remains a Claude Code-only feature under the existing Claude plugin.
 
 The Codex plugin is intentionally self-contained under `plugins/woozo/` so the marketplace entry can resolve it with `./plugins/woozo`.
