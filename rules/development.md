@@ -147,3 +147,32 @@ Default to surfacing uncertainty. Loud failures are cheaper than silent ones.
 - If the contract is still fuzzy, settle it before testing - don't let tests freeze an accidental shape.
 
 Ask yourself: "Could someone else implement this from the contract alone?" If not, it isn't settled yet.
+
+## 12. Design Before Build
+
+**Agree on what to build before building it.**
+
+For any non-trivial feature or behavior change:
+
+- Understand purpose, constraints, and success criteria before writing code. If unclear, ask - one focused question at a time.
+- If the request spans multiple independent pieces, propose a decomposition before refining details of any one piece.
+- Propose 2-3 approaches with trade-offs and a recommendation. Lead with the recommendation - don't present a menu without an opinion.
+- Present the design scaled to its complexity (a few sentences for simple work) and get agreement before implementing.
+- Trivial changes (typos, obvious one-liners) skip the ceremony - but still state what you're about to do.
+
+The test: The user never sees an implementation they wouldn't have approved as a design.
+
+## 13. Debug by Root Cause
+
+**No fixes before the root cause is understood. Symptom patches are failures.**
+
+When something breaks (bug, failing test, unexpected behavior):
+
+- Read the full error and stack trace first. Reproduce reliably. Check what changed recently (git diff, deps, config). Can't reproduce → gather more evidence, don't guess.
+- In multi-component paths, instrument the boundaries to locate WHICH layer fails before theorizing about why.
+- Trace the bad value to its origin. Fix at the source, not where it surfaced.
+- One explicit hypothesis at a time ("X causes this because Y"), tested with the smallest possible change. Never stack a second fix on an unverified first.
+- Reproduce with a failing test before fixing (rule 4), then verify nothing else broke.
+- After 3 failed fix attempts, stop - the problem is likely the design, not the spot. Present the pattern to the user instead of attempting fix #4.
+
+Red flags meaning "return to investigation": "quick fix now, investigate later", "just try changing X", "it's probably X", bundling multiple changes into one attempt.
