@@ -8,8 +8,8 @@ Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woo
 
 Behavioral rules you can opt into globally.
 
-- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Fourteen sections: think before coding, design before build, read before write, SOLID structure what you build, simplicity first, match the codebase, surgical changes, surface conflicts, goal-driven execution, TDD contract first, tests verify intent, checkpoint after every step, fail loud, debug by root cause.
-- **`rules/thinking.md`** — critical/objective thinking rules for every answer and judgment, not just coding: no reflexive agreement, judge claims on evidence, separate facts/inference/opinion, say "I don't know", skip empty praise.
+- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Eleven sections: think before coding, read before write, SOLID structure what you build, simplicity first, match the codebase, surgical changes, surface conflicts, goal-driven execution, tests verify intent, fail loud, debug by root cause.
+- **`rules/thinking.md`** — critical/objective thinking rules for every answer and judgment, not just coding: no reflexive agreement, no manufactured disagreement, scrutiny scaled to the stakes, judge claims on evidence, separate facts/inference/opinion, say "I don't know", skip empty praise.
 - **`skills/rules-install/SKILL.md`** — installs the rules globally by symlinking each file under `rules/` into `~/.claude/rules/woozo/`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
 - **`skills/rules-uninstall/SKILL.md`** — removes the symlinks (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
 
@@ -48,7 +48,7 @@ If `${CLAUDE_PLUGIN_ROOT}` doesn't expand in your Claude Code version, use the a
 
 Methodology skills that auto-trigger during work — no activation step. Once the plugin is installed they surface whenever the situation matches their description. Prompts and outputs are in Korean.
 
-- **`skills/brainstorming/SKILL.md`** — refines an idea into an approved design and spec before any implementation. Explores project context, asks one question at a time, proposes 2-3 approaches, presents the design section by section, and writes the spec to `docs/specs/`. Hard-gates all implementation until the spec is approved. Triggers on creative work (*"만들어줘"*, *"추가해줘"*, *"바꿔줘"*).
+- **`skills/brainstorming/SKILL.md`** — refines an idea into an approved design and spec before any implementation. Explores project context, asks one question at a time, proposes 2-3 approaches, presents the design section by section, and writes the spec to `docs/specs/`. Hard-gates all implementation until the spec is approved.
 - **`skills/systematic-debugging/SKILL.md`** — enforces root-cause-first debugging through four phases (investigate → analyze patterns → hypothesize → implement). No fix before the root cause is understood; after three failed fixes, suspect the architecture. Ships the helpers `root-cause-tracing.md`, `defense-in-depth.md`, `condition-based-waiting.md` (with a TypeScript example), and `find-polluter.sh`. Triggers on bugs, test/build failures, and shared stack traces.
 - **`skills/requesting-code-review/SKILL.md`** — dispatches a `general-purpose` sub-agent as a senior code reviewer over a git SHA range, using the `code-reviewer.md` prompt template (strengths / Critical·Important·Minor issues / merge verdict). Triggers on task or feature completion and before merge.
 

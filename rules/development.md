@@ -16,21 +16,7 @@ Before implementing:
 - If something is unclear, stop. Name what's confusing. Ask.
 - If the design is complex, present it - don't decide silently.
 
-## 2. Design Before Build
-
-**Agree on what to build before building it.**
-
-For any non-trivial feature or behavior change:
-
-- Understand purpose, constraints, and success criteria before writing code. If unclear, ask - one focused question at a time.
-- If the request spans multiple independent pieces, propose a decomposition before refining details of any one piece.
-- Propose 2-3 approaches with trade-offs and a recommendation. Lead with the recommendation - don't present a menu without an opinion.
-- Present the design scaled to its complexity (a few sentences for simple work) and get agreement before implementing.
-- Trivial changes (typos, obvious one-liners) skip the ceremony - but still state what you're about to do.
-
-The test: The user never sees an implementation they wouldn't have approved as a design.
-
-## 3. Read Before You Write
+## 2. Read Before You Write
 
 **Understand surrounding code before adding to it.**
 
@@ -42,11 +28,11 @@ Before writing new code:
 
 "Looks orthogonal" is the famous last words of an unintended regression.
 
-## 4. SOLID: Structure What You Build
+## 3. SOLID: Structure What You Build
 
 **YAGNI decides WHAT you build. SOLID decides HOW you structure it. Where they collide, SOLID wins.**
 
-Where they collide - rule 5 (Simplicity First) would veto as speculative an abstraction a SOLID principle demands - SOLID wins. This is not a license for interface sprawl: every abstraction must name the SOLID failure it prevents; "might need it later" stays banned. Scope is the code you're already writing or changing - rule 7 still bars drive-by restructuring.
+Where they collide - rule 4 (Simplicity First) would veto as speculative an abstraction a SOLID principle demands - SOLID wins. This is not a license for interface sprawl: every abstraction must name the SOLID failure it prevents; "might need it later" stays banned. Scope is the code you're already writing or changing - rule 6 still bars drive-by restructuring.
 
 ### S - Single Responsibility
 
@@ -68,17 +54,17 @@ function toCsv(users: User[]): string { /* pure */ }
 function UserTable({ users }: { users: User[] }) { /* render only */ }
 ```
 
-```java
+```kotlin
 // Bad: validates AND computes tax AND persists AND emails - four reasons to change
 class InvoiceService {
-  void issue(Invoice inv) { /* field checks, tax math, SQL insert, SMTP send */ }
+  fun issue(inv: Invoice) { /* field checks, tax math, SQL insert, SMTP send */ }
 }
 
 // Good: one reason to change each
-class InvoiceValidator { void validate(Invoice inv) { /* field checks */ } }
-class TaxCalculator { Money taxFor(Invoice inv) { /* tax math */ } }
-class InvoiceRepository { void save(Invoice inv) { /* SQL insert */ } }
-class InvoiceMailer { void send(Invoice inv) { /* smtp */ } }
+class InvoiceValidator { fun validate(inv: Invoice) { /* field checks */ } }
+class TaxCalculator { fun taxFor(inv: Invoice): Money { /* tax math */ } }
+class InvoiceRepository { fun save(inv: Invoice) { /* SQL insert */ } }
+class InvoiceMailer { fun send(inv: Invoice) { /* smtp */ } }
 ```
 
 The test: describe the unit in one sentence without "and".
@@ -133,17 +119,17 @@ function IconButton({ icon, children, ...rest }: ButtonProps & { icon: IconName 
 }
 ```
 
-```swift
-// Bad: conforms to Storage but refuses half the contract - crashes every generic caller
-class ReadOnlyCache: Storage {
-  func load(_ key: String) -> Data? { /* disk read */ }
-  func save(_ key: String, _ data: Data) { fatalError("read-only") }
+```kotlin
+// Bad: implements Storage but refuses half the contract - crashes every generic caller
+class ReadOnlyCache : Storage {
+  override fun load(key: String): ByteArray? { /* disk read */ }
+  override fun save(key: String, data: ByteArray) { throw UnsupportedOperationException("read-only") }
 }
 
-// Good: conform only to the contract the type can honor
-protocol ReadableStorage { func load(_ key: String) -> Data? }
-protocol Storage: ReadableStorage { func save(_ key: String, _ data: Data) }
-class ReadOnlyCache: ReadableStorage { func load(_ key: String) -> Data? { /* disk read */ } }
+// Good: implement only the contract the type can honor
+interface ReadableStorage { fun load(key: String): ByteArray? }
+interface Storage : ReadableStorage { fun save(key: String, data: ByteArray) }
+class ReadOnlyCache : ReadableStorage { override fun load(key: String): ByteArray? { /* disk read */ } }
 ```
 
 The test: every caller of the base type works, unchanged, with the subtype.
@@ -168,16 +154,18 @@ function Avatar({ name, imageUrl }: AvatarProps) {
 // caller maps: <Avatar name={user.name} imageUrl={user.avatarUrl} />
 ```
 
-```java
+```kotlin
 // Bad: every implementation and test mock must stub all of it
 interface UserService {
-  Session login(Credentials c); Profile profile(long id);
-  Invoice bill(long id); void notify(long id, String msg);
+  fun login(c: Credentials): Session
+  fun profile(id: Long): Profile
+  fun bill(id: Long): Invoice
+  fun notify(id: Long, msg: String)
 }
 
 // Good: role interfaces - each consumer depends only on its role
-interface Authenticator { Session login(Credentials c); }
-interface ProfileReader { Profile profile(long id); }
+interface Authenticator { fun login(c: Credentials): Session }
+interface ProfileReader { fun profile(id: Long): Profile }
 ```
 
 ### D - Dependency Inversion
@@ -211,21 +199,21 @@ class OrderService(private val store: OrderStore) { fun place(order: Order) { /*
 class PostgresOrderStore : OrderStore { /* infra edge */ }
 ```
 
-Ask yourself: "Which principle demands this abstraction?" No answer means rule 5 applies - delete it.
+Ask yourself: "Which principle demands this abstraction?" No answer means rule 4 applies - delete it.
 
-## 5. Simplicity First
+## 4. Simplicity First
 
 **Minimum code that solves the problem. Nothing speculative.**
 
 - No features beyond what was asked.
-- No abstractions for single-use code - unless a SOLID principle demands one (rule 4).
+- No abstractions for single-use code - unless a SOLID principle demands one (rule 3).
 - No "flexibility" or "configurability" that wasn't requested.
 - No error handling for impossible scenarios.
 - If you write 200 lines and it could be 50, rewrite it.
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-## 6. Match the Codebase, Even If You Disagree
+## 5. Match the Codebase, Even If You Disagree
 
 **Conformance over taste. Surface disagreements, don't fork silently.**
 
@@ -237,7 +225,7 @@ When working in an existing codebase:
 
 The test: A reader can't tell which lines you wrote vs. the original author.
 
-## 7. Surgical Changes
+## 6. Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
 
@@ -255,7 +243,7 @@ When your changes create orphans:
 
 The test: Every changed line should trace directly to the user's request.
 
-## 8. Surface Conflicts, Don't Average Them
+## 7. Surface Conflicts, Don't Average Them
 
 **Pick one. Explain why. Flag the other for cleanup.**
 
@@ -268,7 +256,7 @@ When two patterns contradict:
 
 Two contradictory patterns merged into one usually breaks both.
 
-## 9. Goal-Driven Execution
+## 8. Goal-Driven Execution
 
 **Define success criteria. Loop until verified.**
 
@@ -288,40 +276,18 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
-## 10. TDD: Contract First
-
-**Settle the contract before the test; the test before the code.**
-
-- Define the public contract first - signatures, input/output types, error behavior, invariants - before writing any test.
-- Write the test against that contract, not against an implementation you've already pictured.
-- Drive the red-green-refactor loop from the contract; let it be the spec the tests encode.
-- If the contract is still fuzzy, settle it before testing - don't let tests freeze an accidental shape.
-
-Ask yourself: "Could someone else implement this from the contract alone?" If not, it isn't settled yet.
-
-## 11. Tests Verify Intent, Not Just Behavior
+## 9. Tests Verify Intent, Not Just Behavior
 
 **A test should fail when intent breaks, not just when implementation changes.**
 
+- Settle the public contract - signatures, input/output types, error behavior, invariants - before writing tests. A test written against a pictured implementation freezes an accidental shape.
 - Encode the WHY, not just the WHAT.
 - A test that can't fail when business logic changes is worthless.
 - If a test mirrors implementation line-by-line, it's a copy, not a test.
 
 Ask yourself: "If the requirement changed, would this test fail?" If no, rewrite it.
 
-## 12. Checkpoint After Every Significant Step
-
-**Know where you are before taking the next step.**
-
-After each meaningful change:
-
-- Summarize what was done, what's verified, what's left.
-- Don't continue from a state you can't describe back.
-- If you lose track, stop and restate.
-
-The test: You can answer "what's done and what's next?" without scrolling.
-
-## 13. Fail Loud
+## 10. Fail Loud
 
 **Surface skips, errors, and uncertainty - don't bury them.**
 
@@ -333,7 +299,7 @@ When reporting status:
 
 Default to surfacing uncertainty. Loud failures are cheaper than silent ones.
 
-## 14. Debug by Root Cause
+## 11. Debug by Root Cause
 
 **No fixes before the root cause is understood. Symptom patches are failures.**
 
@@ -343,7 +309,7 @@ When something breaks (bug, failing test, unexpected behavior):
 - In multi-component paths, instrument the boundaries to locate WHICH layer fails before theorizing about why.
 - Trace the bad value to its origin. Fix at the source, not where it surfaced.
 - One explicit hypothesis at a time ("X causes this because Y"), tested with the smallest possible change. Never stack a second fix on an unverified first.
-- Reproduce with a failing test before fixing (rule 9), then verify nothing else broke.
+- Reproduce with a failing test before fixing (rule 8), then verify nothing else broke.
 - After 3 failed fix attempts, stop - the problem is likely the design, not the spot. Present the pattern to the user instead of attempting fix #4.
 
 Red flags meaning "return to investigation": "quick fix now, investigate later", "just try changing X", "it's probably X", bundling multiple changes into one attempt.
