@@ -1,6 +1,6 @@
 # woozo-personal
 
-Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woozo` in the `woozo-personal` marketplace with `rules` and `hud` features. The Codex marketplace exposes only the `rules` feature through `plugins/woozo/`.
+Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woozo` in the `woozo-personal` marketplace with `rules`, `hud`, and a set of auto-triggering workflow skills. The Codex marketplace exposes the `rules` feature and the same workflow skills through `plugins/woozo/`.
 
 ## Features
 
@@ -44,6 +44,16 @@ Manual setup, if you prefer:
 
 If `${CLAUDE_PLUGIN_ROOT}` doesn't expand in your Claude Code version, use the absolute path under `~/.claude/plugins/cache/woozo-personal/woozo/<version>/scripts/statusline-command.sh`.
 
+### workflow skills
+
+Methodology skills that auto-trigger during work — no activation step. Once the plugin is installed they surface whenever the situation matches their description. Prompts and outputs are in Korean.
+
+- **`skills/brainstorming/SKILL.md`** — refines an idea into an approved design and spec before any implementation. Explores project context, asks one question at a time, proposes 2-3 approaches, presents the design section by section, and writes the spec to `docs/specs/`. Hard-gates all implementation until the spec is approved. Triggers on creative work (*"만들어줘"*, *"추가해줘"*, *"바꿔줘"*).
+- **`skills/systematic-debugging/SKILL.md`** — enforces root-cause-first debugging through four phases (investigate → analyze patterns → hypothesize → implement). No fix before the root cause is understood; after three failed fixes, suspect the architecture. Ships the helpers `root-cause-tracing.md`, `defense-in-depth.md`, `condition-based-waiting.md` (with a TypeScript example), and `find-polluter.sh`. Triggers on bugs, test/build failures, and shared stack traces.
+- **`skills/requesting-code-review/SKILL.md`** — dispatches a `general-purpose` sub-agent as a senior code reviewer over a git SHA range, using the `code-reviewer.md` prompt template (strengths / Critical·Important·Minor issues / merge verdict). Triggers on task or feature completion and before merge.
+
+These ship to both the Claude plugin (`skills/`) and the Codex plugin (`plugins/woozo/skills/`); the two copies are kept identical.
+
 ### `update`
 
 Applies a plugin update to installed features. After `/plugin update` (or `claude plugin update woozo@woozo-personal`), ask Claude something like *"업데이트 적용"* / *"apply the plugin update"*.
@@ -70,6 +80,7 @@ Codex support uses this repository as a marketplace. The marketplace catalog liv
 Feature support:
 
 - `rules` installs into `~/.codex/AGENTS.md` as managed Woozo blocks (one per rule file).
+- workflow skills (`brainstorming`, `systematic-debugging`, `requesting-code-review`) ship under `plugins/woozo/skills/`, identical to the Claude copies.
 - `hud` is not exposed to Codex. The HUD remains a Claude Code-only feature under the existing Claude plugin.
 
 The Codex plugin is intentionally self-contained under `plugins/woozo/` so the marketplace entry can resolve it with `./plugins/woozo`.

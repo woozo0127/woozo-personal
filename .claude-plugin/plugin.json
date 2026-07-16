@@ -1,6 +1,6 @@
 {
   "name": "woozo",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Woojo Kim's personal Claude Code utilities: behavioral rules and a 2-line statusline HUD with rate-limit usage.",
   "author": {
     "name": "Woojo Kim",
