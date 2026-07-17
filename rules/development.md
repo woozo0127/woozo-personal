@@ -38,6 +38,7 @@ Where they collide - rule 4 (Simplicity First) would veto as speculative an abst
 
 - LLM failure mode: piling every new concern into the class or component already in context - the god-unit that fetches, computes, persists, and notifies in one 400-line block.
 - One reason to change per unit - function, hook, class, or module. If describing it honestly requires "and", split it.
+- Split along reasons to change, not surface axes - not per operation, per endpoint, per screen, per workflow step. Units that always change together are one responsibility; scattering them into per-X classes is the opposite failure mode - indirection without a second reason to change.
 
 ```tsx
 // Bad: fetches AND transforms AND renders - three reasons to change
@@ -65,9 +66,17 @@ class InvoiceValidator { fun validate(inv: Invoice) { /* field checks */ } }
 class TaxCalculator { fun taxFor(inv: Invoice): Money { /* tax math */ } }
 class InvoiceRepository { fun save(inv: Invoice) { /* SQL insert */ } }
 class InvoiceMailer { fun send(inv: Invoice) { /* smtp */ } }
+
+// Still one responsibility: three operations, one reason to change - task domain policy
+class TaskService(private val store: TaskStore) {
+  fun create(t: Task) { /* domain rules + store.save */ }
+  fun update(t: Task) { /* domain rules + store.save */ }
+  fun delete(id: Long) { /* domain rules + store.delete */ }
+}
+// Over-split: one class per operation (CreateTaskUseCase, UpdateTaskUseCase, ...) - N files, one shared reason to change
 ```
 
-The test: describe the unit in one sentence without "and".
+The test: describe the unit in one sentence without "and" between reasons to change - enumerating same-reason operations ("creates, updates, deletes tasks") is one responsibility; chaining concerns ("validates and persists and emails") is not.
 
 ### O - Open/Closed
 
