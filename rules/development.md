@@ -32,7 +32,7 @@ Before writing new code:
 
 **YAGNI decides WHAT you build. SOLID decides HOW you structure it. Where they collide, SOLID wins.**
 
-Where they collide - rule 4 (Simplicity First) would veto as speculative an abstraction a SOLID principle demands - SOLID wins. This is not a license for interface sprawl: every abstraction must name the SOLID failure it prevents; "might need it later" stays banned. Scope is the code you're already writing or changing - rule 6 still bars drive-by restructuring.
+Where they collide - rule 5 (Simplicity First) would veto as speculative an abstraction a SOLID principle demands - SOLID wins. This is not a license for interface sprawl: every abstraction must name the SOLID failure it prevents; "might need it later" stays banned. Scope is the code you're already writing or changing - rule 7 still bars drive-by restructuring.
 
 ### S - Single Responsibility
 
@@ -208,9 +208,98 @@ class OrderService(private val store: OrderStore) { fun place(order: Order) { /*
 class PostgresOrderStore : OrderStore { /* infra edge */ }
 ```
 
-Ask yourself: "Which principle demands this abstraction?" No answer means rule 4 applies - delete it.
+Ask yourself: "Which principle demands this abstraction?" No answer means rule 5 applies - delete it.
 
-## 4. Simplicity First
+## 4. Behavior Over Data
+
+**Objects are defined by what they do, not what they hold. Don't pull data out and decide for the object - tell it what to do.**
+
+### Tell, Don't Ask
+
+- LLM failure mode: getter-driven logic - state pulled out, the decision made at the call site, the result written back; the domain object degenerates into a data bag (anemic model).
+- Give the decision to the object that holds the data it needs (Information Expert). Send a message instead of interrogating state.
+
+```tsx
+// Bad: hook exposes raw state, every caller re-derives the decision
+const { items } = useCart();
+const canCheckout = items.length > 0 && items.every(i => i.inStock);
+
+// Good: the owner of the state owns the decision
+const { canCheckout } = useCart();
+```
+
+```kotlin
+// Bad: interrogate state, decide outside, write back
+if (account.balance() >= amount) {
+  account.setBalance(account.balance() - amount)
+}
+
+// Good: one message - the object enforces its own rules
+account.withdraw(amount)
+```
+
+The test: an `if` at the call site deciding on someone else's state means the logic belongs to the state's owner.
+
+### Design by Responsibility, Not by Data
+
+- LLM failure mode: settling the field/DTO shape first, then scattering logic across whatever services and components are open - an empty domain surrounded by transaction scripts.
+- Settle the messages the collaboration needs first, then pick the unit that answers each. Behavior first; state follows to support it, private by default.
+
+```tsx
+// Bad: data-first API - state + setter passed down, child mutates freely
+<CartItems items={items} setItems={setItems} />
+
+// Good: message-first API - the child requests, the owner decides
+<CartItems items={items} onRemove={removeItem} onChangeQty={changeQty} />
+```
+
+```kotlin
+// Bad: field bag first - logic lands in whatever service is open
+class Order(var status: String, var paidAmount: Money)
+class OrderService {
+  fun cancel(o: Order) {
+    if (o.status == "PAID") refund(o.paidAmount)
+    o.status = "CANCELLED"
+  }
+}
+
+// Good: the message came first - Order owns its transitions
+class Order(private var status: Status, private val paidAmount: Money) {
+  fun cancel(): Refund? { /* decides from its own state */ }
+}
+```
+
+### Composition Over Inheritance
+
+- LLM failure mode: subclassing to reuse code - utility ancestor classes, hierarchies that deepen with every variation; on the frontend, a do-everything base component configured by props.
+- Inherit only for true is-a substitution that honors L (rule 3). For reuse and variation, compose and delegate. OCP says "don't edit the shared component"; this says "don't seek reuse in a configurable ancestor - assemble it at the call site".
+
+```tsx
+// Bad: reuse via a do-everything base and config props
+<BaseCard type="user" showAvatar showBadge data={user} />
+
+// Good: reuse via composition - Card provides the frame, callers fill it
+<Card>
+  <Avatar name={user.name} imageUrl={user.avatarUrl} />
+  <Badge level={user.level} />
+</Card>
+```
+
+```kotlin
+// Bad: inherits to reuse write() - ExportService IS-A CsvWriter? No.
+class ExportService : CsvWriter() {
+  fun export(rows: List<Row>) { write(rows) }
+}
+
+// Good: has-a - swap the writer without touching the service
+class ExportService(private val writer: RowWriter) {
+  fun export(rows: List<Row>) { writer.write(rows) }
+}
+```
+
+Ask yourself: "This decision I'm about to make with pulled-out data - could the object make it itself?"
+
+## 5. Simplicity First
 
 **Minimum code that solves the problem. Nothing speculative.**
 
@@ -222,7 +311,7 @@ Ask yourself: "Which principle demands this abstraction?" No answer means rule 4
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-## 5. Match the Codebase, Even If You Disagree
+## 6. Match the Codebase, Even If You Disagree
 
 **Conformance over taste. Surface disagreements, don't fork silently.**
 
@@ -234,7 +323,7 @@ When working in an existing codebase:
 
 The test: A reader can't tell which lines you wrote vs. the original author.
 
-## 6. Surgical Changes
+## 7. Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
 
@@ -252,7 +341,7 @@ When your changes create orphans:
 
 The test: Every changed line should trace directly to the user's request.
 
-## 7. Surface Conflicts, Don't Average Them
+## 8. Surface Conflicts, Don't Average Them
 
 **Pick one. Explain why. Flag the other for cleanup.**
 
@@ -265,7 +354,7 @@ When two patterns contradict:
 
 Two contradictory patterns merged into one usually breaks both.
 
-## 8. Goal-Driven Execution
+## 9. Goal-Driven Execution
 
 **Define success criteria. Loop until verified.**
 
@@ -285,7 +374,7 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
-## 9. Tests Verify Intent, Not Just Behavior
+## 10. Tests Verify Intent, Not Just Behavior
 
 **A test should fail when intent breaks, not just when implementation changes.**
 
@@ -296,7 +385,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 Ask yourself: "If the requirement changed, would this test fail?" If no, rewrite it.
 
-## 10. Fail Loud
+## 11. Fail Loud
 
 **Surface skips, errors, and uncertainty - don't bury them.**
 
@@ -308,7 +397,7 @@ When reporting status:
 
 Default to surfacing uncertainty. Loud failures are cheaper than silent ones.
 
-## 11. Debug by Root Cause
+## 12. Debug by Root Cause
 
 **No fixes before the root cause is understood. Symptom patches are failures.**
 
@@ -318,7 +407,7 @@ When something breaks (bug, failing test, unexpected behavior):
 - In multi-component paths, instrument the boundaries to locate WHICH layer fails before theorizing about why.
 - Trace the bad value to its origin. Fix at the source, not where it surfaced.
 - One explicit hypothesis at a time ("X causes this because Y"), tested with the smallest possible change. Never stack a second fix on an unverified first.
-- Reproduce with a failing test before fixing (rule 8), then verify nothing else broke.
+- Reproduce with a failing test before fixing (rule 9), then verify nothing else broke.
 - After 3 failed fix attempts, stop - the problem is likely the design, not the spot. Present the pattern to the user instead of attempting fix #4.
 
 Red flags meaning "return to investigation": "quick fix now, investigate later", "just try changing X", "it's probably X", bundling multiple changes into one attempt.

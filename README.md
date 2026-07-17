@@ -8,7 +8,7 @@ Personal Claude Code and Codex plugin utilities. The Claude plugin ships as `woo
 
 Behavioral rules you can opt into globally.
 
-- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Eleven sections: think before coding, read before write, SOLID structure what you build, simplicity first, match the codebase, surgical changes, surface conflicts, goal-driven execution, tests verify intent, fail loud, debug by root cause.
+- **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Twelve sections: think before coding, read before write, SOLID structure what you build, behavior over data, simplicity first, match the codebase, surgical changes, surface conflicts, goal-driven execution, tests verify intent, fail loud, debug by root cause.
 - **`rules/thinking.md`** — critical/objective thinking rules for every answer and judgment, not just coding: no reflexive agreement, no manufactured disagreement, scrutiny scaled to the stakes, judge claims on evidence, separate facts/inference/opinion, say "I don't know", skip empty praise.
 - **`skills/rules-install/SKILL.md`** — installs the rules globally by symlinking each file under `rules/` into `~/.claude/rules/woozo/`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
 - **`skills/rules-uninstall/SKILL.md`** — removes the symlinks (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
