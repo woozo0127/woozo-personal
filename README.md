@@ -51,6 +51,7 @@ Methodology skills that auto-trigger during work — no activation step. Once th
 - **`skills/brainstorming/SKILL.md`** — refines an idea into an approved design and spec before any implementation. Explores project context, asks one question at a time, proposes 2-3 approaches, presents the design section by section, and writes the spec to `docs/specs/`. Hard-gates all implementation until the spec is approved.
 - **`skills/systematic-debugging/SKILL.md`** — enforces root-cause-first debugging through four phases (investigate → analyze patterns → hypothesize → implement). No fix before the root cause is understood; after three failed fixes, suspect the architecture. Ships the helpers `root-cause-tracing.md`, `defense-in-depth.md`, `condition-based-waiting.md` (with a TypeScript example), and `find-polluter.sh`. Triggers on bugs, test/build failures, and shared stack traces.
 - **`skills/requesting-code-review/SKILL.md`** — dispatches a `general-purpose` sub-agent as a senior code reviewer over a git SHA range, using the `code-reviewer.md` prompt template (strengths / Critical·Important·Minor issues / merge verdict). Triggers on task or feature completion and before merge.
+- **`skills/explain-diff-html/SKILL.md`** — renders a rich, interactive HTML explanation of a code change, diff, branch, or PR (background → intuition → code walkthrough → interactive quiz). Ships `render.py`, which turns a small JSON content spec into the final self-contained page (CSS/JS scaffolding, TOC, quiz-option shuffling, date-prefixed filename) so only the content is written per invocation. Recipe adapted from [Geoffrey Litt's explain-diff gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524). Triggers on requests like *"이 PR 설명해줘"* / *"explain this diff"*.
 
 These ship to both the Claude plugin (`skills/`) and the Codex plugin (`plugins/woozo/skills/`); the two copies are kept identical.
 
@@ -80,7 +81,7 @@ Codex support uses this repository as a marketplace. The marketplace catalog liv
 Feature support:
 
 - `rules` installs into `~/.codex/AGENTS.md` as managed Woozo blocks (one per rule file).
-- workflow skills (`brainstorming`, `systematic-debugging`, `requesting-code-review`) ship under `plugins/woozo/skills/`, identical to the Claude copies.
+- workflow skills (`brainstorming`, `systematic-debugging`, `requesting-code-review`, `explain-diff-html`) ship under `plugins/woozo/skills/`, identical to the Claude copies.
 - `hud` is not exposed to Codex. The HUD remains a Claude Code-only feature under the existing Claude plugin.
 
 The Codex plugin is intentionally self-contained under `plugins/woozo/` so the marketplace entry can resolve it with `./plugins/woozo`.
