@@ -27,13 +27,18 @@ This skill manages exactly the blocks between these marker pairs in `~/.codex/AG
 <!-- woozo-personal:thinking-rules:end -->
 ```
 
+```markdown
+<!-- woozo-personal:writing-rules:start -->
+<!-- woozo-personal:writing-rules:end -->
+```
+
 Do not remove unmarked content.
 
 ## Procedure
 
 1. Read `~/.codex/AGENTS.md` as text. If it does not exist, the rules are already uninstalled.
 
-2. For each marker pair (`development-rules`, `thinking-rules`), inspect the owned markers:
+2. For each marker pair (`development-rules`, `thinking-rules`, `writing-rules`), inspect the owned markers:
    - **Both markers exist** -> remove the start marker, all content between the markers, and the end marker. Preserve all other content verbatim.
    - **Neither marker exists** -> report that this Codex rules block is already absent.
    - **Only one marker exists** -> stop, show the marker line found, and ask the user how to repair the partial block.
@@ -45,6 +50,8 @@ Do not remove unmarked content.
 ! grep -q "woozo-personal:development-rules:end" ~/.codex/AGENTS.md
 ! grep -q "woozo-personal:thinking-rules:start" ~/.codex/AGENTS.md
 ! grep -q "woozo-personal:thinking-rules:end" ~/.codex/AGENTS.md
+! grep -q "woozo-personal:writing-rules:start" ~/.codex/AGENTS.md
+! grep -q "woozo-personal:writing-rules:end" ~/.codex/AGENTS.md
 ```
 
 4. Inform the user that removal applies to new Codex sessions. The current session may keep already-loaded instructions.
