@@ -1,6 +1,6 @@
 ---
 name: rules-install
-description: Use this skill when the user wants to install, activate, or apply the rules feature globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates symlinks under `~/.claude/rules/woozo/` (`development.md`, `thinking.md`) pointing at this plugin's source files, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks them up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
+description: Use this skill when the user wants to install, activate, or apply the rules feature globally — including phrases like "install rules", "activate rules", "rules 설치", "rules 활성화", "코딩 룰 적용", "behavioral rules 켜기", or any explicit request to make the rules available in every Claude Code session. The skill creates symlinks under `~/.claude/rules/woozo/` (`development.md`, `thinking.md`, `writing.md`) pointing at this plugin's source files, so the user's existing `~/.claude/rules/*.md` auto-load mechanism picks them up at every session start. Does not modify `settings.json` or `CLAUDE.md`.
 ---
 
 # rules install
@@ -21,6 +21,7 @@ This skill manages exactly these targets under `~/.claude/rules/woozo/`. The `wo
 |---|---|
 | `${CLAUDE_PLUGIN_ROOT}/rules/development.md` | `~/.claude/rules/woozo/development.md` |
 | `${CLAUDE_PLUGIN_ROOT}/rules/thinking.md` | `~/.claude/rules/woozo/thinking.md` |
+| `${CLAUDE_PLUGIN_ROOT}/rules/writing.md` | `~/.claude/rules/woozo/writing.md` |
 
 Source files are the truth — never edit through the symlink; edit the source.
 
@@ -32,7 +33,7 @@ Source files are the truth — never edit through the symlink; edit the source.
    - **Symlink pointing elsewhere** → show the user the current target via `readlink`, confirm before `rm`.
    - **Regular file** → user-edited copy. Show its `ls -la` and first few lines, confirm strongly. Offer to rename to `communication.md.bak` instead of deleting; only `rm` outright if the user explicitly declines the backup.
 
-1. **Resolve the source absolute paths** — for each rule file (`development.md`, `thinking.md`):
+1. **Resolve the source absolute paths** — for each rule file (`development.md`, `thinking.md`, `writing.md`):
    - First try `${CLAUDE_PLUGIN_ROOT}/rules/<file>`. If `${CLAUDE_PLUGIN_ROOT}` expands and the file exists, use that.
    - Fallback: glob `~/.claude/plugins/cache/woozo-personal/woozo/*/rules/<file>` and pick the lexicographically largest path (latest version directory).
    - If neither resolves, abort and ask the user to run `/plugin update` for the `woozo@woozo-personal` plugin.
@@ -50,10 +51,12 @@ Source files are the truth — never edit through the symlink; edit the source.
    ```sh
    readlink ~/.claude/rules/woozo/development.md
    readlink ~/.claude/rules/woozo/thinking.md
+   readlink ~/.claude/rules/woozo/writing.md
    test -f ~/.claude/rules/woozo/development.md && head -3 ~/.claude/rules/woozo/development.md
    test -f ~/.claude/rules/woozo/thinking.md && head -3 ~/.claude/rules/woozo/thinking.md
+   test -f ~/.claude/rules/woozo/writing.md && head -3 ~/.claude/rules/woozo/writing.md
    ```
-   Each `readlink` should match its resolved source path. The heads should start with `# Development Rules` and `# Critical Thinking Rules` respectively.
+   Each `readlink` should match its resolved source path. The heads should start with `# Development Rules`, `# Critical Thinking Rules`, and `# Writing Rules` respectively.
 
 5. **Inform the user:** installed; takes effect on the next session start (existing sessions don't re-read global rules).
 

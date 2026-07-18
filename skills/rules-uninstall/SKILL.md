@@ -1,6 +1,6 @@
 ---
 name: rules-uninstall
-description: Use this skill when the user wants to uninstall, deactivate, disable, or remove the rules feature — including phrases like "uninstall rules", "deactivate rules", "rules 제거", "rules 비활성화", "코딩 룰 끄기", "behavioral rules 끄기". The skill removes the symlinks under `~/.claude/rules/woozo/` (`development.md`, `thinking.md`) created by the rules-install skill, and prunes the empty `woozo/` directory. Does not modify `settings.json` or `CLAUDE.md`.
+description: Use this skill when the user wants to uninstall, deactivate, disable, or remove the rules feature — including phrases like "uninstall rules", "deactivate rules", "rules 제거", "rules 비활성화", "코딩 룰 끄기", "behavioral rules 끄기". The skill removes the symlinks under `~/.claude/rules/woozo/` (`development.md`, `thinking.md`, `writing.md`) created by the rules-install skill, and prunes the empty `woozo/` directory. Does not modify `settings.json` or `CLAUDE.md`.
 ---
 
 # rules uninstall
@@ -19,12 +19,13 @@ This skill manages exactly these targets under `~/.claude/rules/woozo/`. The `wo
 
 - `~/.claude/rules/woozo/development.md`
 - `~/.claude/rules/woozo/thinking.md`
+- `~/.claude/rules/woozo/writing.md`
 
 The skill is also responsible for cleaning up any `~/.claude/rules/woozo/communication.md` left over from earlier versions that bundled a separate communication rule file. Treat any such entry the same way as `development.md` (inspect → confirm if non-symlink → `rm`).
 
 ## Procedure
 
-1. **For each entry — `development.md`, `thinking.md`, and the legacy `communication.md` — inspect `~/.claude/rules/woozo/<file>.md`:**
+1. **For each entry — `development.md`, `thinking.md`, `writing.md`, and the legacy `communication.md` — inspect `~/.claude/rules/woozo/<file>.md`:**
    - **Does not exist** → already uninstalled for this file. Skip (no-op).
    - **Symlink pointing into this plugin's cache** (target starts with `~/.claude/plugins/cache/woozo-personal/woozo/`) → `rm` it without prompting.
    - **Symlink pointing elsewhere** → show the user the current target via `readlink`, confirm before `rm`.

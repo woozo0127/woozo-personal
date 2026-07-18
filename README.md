@@ -10,6 +10,7 @@ Behavioral rules you can opt into globally.
 
 - **`rules/development.md`** — behavioral guidelines to reduce common LLM coding mistakes. Twelve sections: think before coding, read before write, SOLID structure what you build, behavior over data, simplicity first, match the codebase, surgical changes, surface conflicts, goal-driven execution, tests verify intent, fail loud, debug by root cause.
 - **`rules/thinking.md`** — critical/objective thinking rules for every answer and judgment, not just coding: no reflexive agreement, no manufactured disagreement, scrutiny scaled to the stakes, judge claims on evidence, separate facts/inference/opinion, say "I don't know", skip empty praise.
+- **`rules/writing.md`** — plain-writing rules for all prose the agent produces, chat and documents alike: cut needless words, plain words, active verbs, answer-first structure, and a checklist of AI-voice tells to drop. Distilled from Orwell, Strunk & White, Zinsser, Williams, Pinker, and Graham.
 - **`skills/rules-install/SKILL.md`** — installs the rules globally by symlinking each file under `rules/` into `~/.claude/rules/woozo/`. Picked up by the user's existing `~/.claude/rules/*.md` auto-load mechanism on the next session. The `woozo/` subdirectory keeps the plugin's files namespaced so they don't collide with sibling rules like `commit.md`.
 - **`skills/rules-uninstall/SKILL.md`** — removes the symlinks (and any leftover `communication.md` symlink from earlier versions) and prunes the empty `woozo/` directory.
 
@@ -91,6 +92,7 @@ The Codex plugin is intentionally self-contained under `plugins/woozo/` so the m
 Several features adapt prior work. Thanks to the original authors:
 
 - **`rules/development.md`** — its *Think Before Coding*, *Simplicity First*, *Surgical Changes*, and *Goal-Driven Execution* sections trace back to [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), a distillation of Andrej Karpathy's observations on common LLM coding mistakes (MIT).
+- **`rules/writing.md`** — distills plain-writing principles from George Orwell's "Politics and the English Language", Strunk & White's *The Elements of Style*, William Zinsser's *On Writing Well*, Joseph Williams's *Style: Lessons in Clarity and Grace*, Steven Pinker's *The Sense of Style*, and Paul Graham's ["Write Simply"](https://paulgraham.com/simply.html).
 - **`brainstorming`, `systematic-debugging`, `requesting-code-review`** adapt skills from [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent (MIT).
 - **`explain-diff-html`** adapts the recipe from [Geoffrey Litt's explain-diff gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524).
 

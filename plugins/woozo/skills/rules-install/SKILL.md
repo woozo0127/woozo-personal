@@ -5,7 +5,7 @@ description: Use this skill when the user wants to install, activate, or apply t
 
 # rules install
 
-Install the rules feature into Codex global instructions by copying this plugin's rule files (`rules/development.md`, `rules/thinking.md`) into managed blocks in `~/.codex/AGENTS.md`.
+Install the rules feature into Codex global instructions by copying this plugin's rule files (`rules/development.md`, `rules/thinking.md`, `rules/writing.md`) into managed blocks in `~/.codex/AGENTS.md`.
 
 ## When to use
 
@@ -27,12 +27,18 @@ This skill manages exactly the blocks between these marker pairs in `~/.codex/AG
 <!-- woozo-personal:thinking-rules:end -->
 ```
 
+```markdown
+<!-- woozo-personal:writing-rules:start -->
+<!-- woozo-personal:writing-rules:end -->
+```
+
 Do not edit unrelated content in `~/.codex/AGENTS.md`.
 
 | Source file | Marker pair | Content header |
 |---|---|---|
 | `rules/development.md` | `woozo-personal:development-rules` | `# Development Rules` |
 | `rules/thinking.md` | `woozo-personal:thinking-rules` | `# Critical Thinking Rules` |
+| `rules/writing.md` | `woozo-personal:writing-rules` | `# Writing Rules` |
 
 ## Procedure
 
@@ -64,6 +70,9 @@ grep -n "# Development Rules" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:start" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:end" ~/.codex/AGENTS.md
 grep -n "# Critical Thinking Rules" ~/.codex/AGENTS.md
+grep -n "woozo-personal:writing-rules:start" ~/.codex/AGENTS.md
+grep -n "woozo-personal:writing-rules:end" ~/.codex/AGENTS.md
+grep -n "# Writing Rules" ~/.codex/AGENTS.md
 ```
 
 6. Inform the user that Codex reads global instructions in new sessions, so they should restart Codex or start a new session for the rules to take effect.

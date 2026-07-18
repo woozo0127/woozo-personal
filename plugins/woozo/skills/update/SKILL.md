@@ -17,6 +17,7 @@ Same as `rules-install`:
 |---|---|---|
 | `rules/development.md` | `woozo-personal:development-rules` | `# Development Rules` |
 | `rules/thinking.md` | `woozo-personal:thinking-rules` | `# Critical Thinking Rules` |
+| `rules/writing.md` | `woozo-personal:writing-rules` | `# Writing Rules` |
 
 ## Procedure
 
@@ -36,6 +37,8 @@ grep -n "woozo-personal:development-rules:start" ~/.codex/AGENTS.md
 grep -n "# Development Rules" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:start" ~/.codex/AGENTS.md
 grep -n "# Critical Thinking Rules" ~/.codex/AGENTS.md
+grep -n "woozo-personal:writing-rules:start" ~/.codex/AGENTS.md
+grep -n "# Writing Rules" ~/.codex/AGENTS.md
 ```
 
 5. Inform the user that new Codex sessions pick up the refreshed instructions; the current session keeps already-loaded ones.
