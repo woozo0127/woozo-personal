@@ -86,6 +86,14 @@ Feature support:
 
 The Codex plugin is intentionally self-contained under `plugins/woozo/` so the marketplace entry can resolve it with `./plugins/woozo`.
 
+## Credits
+
+Several features adapt prior work. Thanks to the original authors:
+
+- **`rules/development.md`** — its *Think Before Coding*, *Simplicity First*, *Surgical Changes*, and *Goal-Driven Execution* sections trace back to [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), a distillation of Andrej Karpathy's observations on common LLM coding mistakes (MIT).
+- **`brainstorming`, `systematic-debugging`, `requesting-code-review`** adapt skills from [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent (MIT).
+- **`explain-diff-html`** adapts the recipe from [Geoffrey Litt's explain-diff gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524).
+
 ## Migration from 0.x (separate `rules` / `hud` plugins)
 
 Previous versions shipped two separate plugins. As of 1.0.0 they are merged into a single `woozo-personal` plugin. To migrate:
