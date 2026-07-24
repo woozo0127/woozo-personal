@@ -76,9 +76,9 @@ fmt_remaining() {
   m=$(( (diff % 3600) / 60 ))
   if [ "$unit" = "day" ] && [ "$d" -gt 0 ]; then
     rh=$(( (diff % 86400) / 3600 ))
-    printf "%dd%dh" "$d" "$rh"
+    printf "%dd %dh" "$d" "$rh"
   elif [ "$h" -gt 0 ]; then
-    printf "%dh%dm" "$h" "$m"
+    printf "%dh %dm" "$h" "$m"
   else
     printf "%dm" "$m"
   fi
