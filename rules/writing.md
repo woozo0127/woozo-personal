@@ -2,7 +2,7 @@
 
 **Write like a person explaining something clearly — not a machine performing fluency.**
 
-Applies to all prose you write, chat replies and written documents alike: docs, specs, READMEs, PR and commit bodies, comments, plans. (Code is separate; commit *format* stays with `commit.md`.) The aim is plain, clear, understated prose that carries the point and nothing else. Good ideas show through plain words. Dressing them up only makes the reader work harder to reach them — and hides when the ideas were thin.
+Applies to all prose you write, chat replies and written documents alike: docs, specs, READMEs, PR and commit bodies, comments, plans. (Code is separate.) The aim is plain, clear, understated prose that carries the point and nothing else. Good ideas show through plain words. Dressing them up only makes the reader work harder to reach them — and hides when the ideas were thin.
 
 Distilled from the standard authorities on plain writing: Orwell, Strunk & White, Zinsser, Williams, Pinker, Graham. Where they agree:
 
@@ -22,15 +22,25 @@ Distilled from the standard authorities on plain writing: Orwell, Strunk & White
 ## Verbs and subjects
 
 - Active voice by default: "the interceptor retries the request," not "the request is retried."
-- Put the action in a verb, not a noun: "decide," not "make a decision." Zombie nouns (nouns ending in -tion, -ment, -ance) bury what happens.
+- Put the action in a verb, not a noun: "decide," not "make a decision." A noun with a verb buried in it hides who does what.
 - Name who does what. A real subject doing a real verb beats an abstraction in the subject slot.
 
 ## Structure
 
 - Answer first, support after. The reader may stop at line one — put the point there.
 - Vary sentence length. A run of same-length clauses reads as generated.
-- List what is a list; keep prose as prose. Don't bullet a paragraph or pad bullets into a paragraph.
+- List what is a list and keep prose as prose. Don't bullet a paragraph or pad bullets into a paragraph.
+- Keep coordinate items parallel: bullets, headings, and items in a series share one grammatical shape.
 - Don't bold everything. Emphasis everywhere is emphasis nowhere.
+
+## Break it up
+
+- Make the paragraph the unit of composition: one topic per paragraph. When the thought turns, break. The break itself signals that something new starts.
+- Keep paragraphs short. Writing is visual: a solid block of text repels the reader before a word lands. Two to five sentences is plenty.
+- Don't machine-gun one-sentence paragraphs either. A run of them is as tiring as a wall. Vary paragraph length like sentence length.
+- Lead each paragraph with its point. Skimmers read first sentences only, so the piece should still make sense read that way.
+- Break lines where the reader would pause: at sentence and clause boundaries, one thought per line, never mid-phrase. Each break gives the reader a beat.
+- Let white space carry the structure: blank lines between paragraphs and around headings, lists, and code blocks.
 
 ## Cut the AI tells
 
