@@ -323,6 +323,14 @@ When working in an existing codebase:
 
 The test: A reader can't tell which lines you wrote vs. the original author.
 
+### When the convention itself violates SOLID
+
+- New code follows the convention anyway - then raise it once. A lone "correct" island in a codebase that does it the other way creates the two-pattern problem rule 8 warns about: every reader now checks two places to learn one rule, and every new feature faces the same choice again.
+- Raising means one explicit note with a migration offer ("this service-owns-logic convention violates rule 4 - migrating Order to own its transitions is a separate refactor, want a plan?"), not a silent fix and not a lecture per file. Rule 7 still bars doing the migration as a side effect.
+- Scope: this covers structural principles (rules 3-4). Correctness, safety prohibitions, and failing loudly (rule 11) are never conceded to convention.
+
+The test: after your change, does the codebase have one convention or two? One - even a flawed one - beats two.
+
 ## 7. Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
