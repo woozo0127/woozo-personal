@@ -5,7 +5,7 @@ description: Use this skill when the user wants to install, activate, or apply t
 
 # rules install
 
-Install the rules feature into Codex global instructions by copying this plugin's rule files (`rules/development.md`, `rules/thinking.md`, `rules/writing.md`) into managed blocks in `~/.codex/AGENTS.md`.
+Install the rules feature into Codex global instructions by copying this plugin's rule files (`rules/development.md`, `rules/feedback.md`, `rules/thinking.md`, `rules/writing.md`) into managed blocks in `~/.codex/AGENTS.md`.
 
 ## When to use
 
@@ -23,6 +23,11 @@ This skill manages exactly the blocks between these marker pairs in `~/.codex/AG
 ```
 
 ```markdown
+<!-- woozo-personal:feedback-rules:start -->
+<!-- woozo-personal:feedback-rules:end -->
+```
+
+```markdown
 <!-- woozo-personal:thinking-rules:start -->
 <!-- woozo-personal:thinking-rules:end -->
 ```
@@ -37,6 +42,7 @@ Do not edit unrelated content in `~/.codex/AGENTS.md`.
 | Source file | Marker pair | Content header |
 |---|---|---|
 | `rules/development.md` | `woozo-personal:development-rules` | `# Development Rules` |
+| `rules/feedback.md` | `woozo-personal:feedback-rules` | `# Feedback Gate Rules` |
 | `rules/thinking.md` | `woozo-personal:thinking-rules` | `# Critical Thinking Rules` |
 | `rules/writing.md` | `woozo-personal:writing-rules` | `# Writing Rules` |
 
@@ -67,6 +73,9 @@ Apply steps 1–4 for each rule file in the table above.
 grep -n "woozo-personal:development-rules:start" ~/.codex/AGENTS.md
 grep -n "woozo-personal:development-rules:end" ~/.codex/AGENTS.md
 grep -n "# Development Rules" ~/.codex/AGENTS.md
+grep -n "woozo-personal:feedback-rules:start" ~/.codex/AGENTS.md
+grep -n "woozo-personal:feedback-rules:end" ~/.codex/AGENTS.md
+grep -n "# Feedback Gate Rules" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:start" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:end" ~/.codex/AGENTS.md
 grep -n "# Critical Thinking Rules" ~/.codex/AGENTS.md

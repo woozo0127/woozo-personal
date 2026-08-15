@@ -16,6 +16,7 @@ Same as `rules-install`:
 | Source file | Marker pair | Content header |
 |---|---|---|
 | `rules/development.md` | `woozo-personal:development-rules` | `# Development Rules` |
+| `rules/feedback.md` | `woozo-personal:feedback-rules` | `# Feedback Gate Rules` |
 | `rules/thinking.md` | `woozo-personal:thinking-rules` | `# Critical Thinking Rules` |
 | `rules/writing.md` | `woozo-personal:writing-rules` | `# Writing Rules` |
 
@@ -35,6 +36,8 @@ Same as `rules-install`:
 ```sh
 grep -n "woozo-personal:development-rules:start" ~/.codex/AGENTS.md
 grep -n "# Development Rules" ~/.codex/AGENTS.md
+grep -n "woozo-personal:feedback-rules:start" ~/.codex/AGENTS.md
+grep -n "# Feedback Gate Rules" ~/.codex/AGENTS.md
 grep -n "woozo-personal:thinking-rules:start" ~/.codex/AGENTS.md
 grep -n "# Critical Thinking Rules" ~/.codex/AGENTS.md
 grep -n "woozo-personal:writing-rules:start" ~/.codex/AGENTS.md
